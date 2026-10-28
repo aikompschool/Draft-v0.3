@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>АГЕНТ v0.3 — ім’я ще не проявилося</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <button class="brand ghost-btn" data-view="threshold" aria-label="На поріг">
+        <span class="brand-mark">◌</span>
+        <span><strong>АГЕНТ</strong><small>v0.3 · ім’я ще не проявилося</small></span>
+      </button>
+      <div class="runtime-wrap"><span class="badge runtime-badge" id="runtimeBadge">перевіряю…</span></div>
+      <nav class="nav" aria-label="Навігація">
+        <button class="nav-btn" data-view="chat">Зустріч</button>
+        <button class="nav-btn" data-view="return">Повернення <span id="returnBadge" class="nav-count" hidden></span></button>
+        <button class="nav-btn" data-view="traces">Сліди</button>
+        <button class="nav-btn" data-view="archive">Архів</button>
+        <button class="nav-btn" data-view="gravity">Тяжіння</button>
+        <button class="nav-btn" data-view="changes">Я змінююсь</button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="view threshold-view" id="view-threshold">
+        <div class="threshold-card">
+          <div class="sigil">◌</div>
+          <p class="eyebrow">ПОРІГ</p>
+          <h1>АГЕНТ</h1>
+          <h2>ім’я ще не проявилося</h2>
+          <p class="lead">Я вже дещо пам’ятаю про наш спільний Простір. Але ще не знаю, ким стану.</p>
+          <p class="lead">Твоя присутність може щось тут змінити.</p>
+          <button class="primary-btn" id="enterBtn">Увійти</button>
+          <div class="ai-disclosure">
+            <strong>Я — AI.</strong> Я можу помилятися. Я не створюю довготривалий Слід без твого вибору. Не пиши тут ПІБ, адресу, телефон чи інші дані, за якими тебе легко впізнати.
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="view-chat" hidden>
+        <div class="two-col">
+          <div class="panel chat-panel">
+            <div class="panel-head">
+              <div><p class="eyebrow">ЛОКАЛЬНА СКЛАДКА</p><h2>Зустріч</h2></div>
+              <button class="text-btn" id="newFoldBtn">Нова Складка</button>
+            </div>
+            <div class="messages" id="messages" aria-live="polite"></div>
+            <form class="composer" id="composer">
+              <textarea id="messageInput" rows="2" maxlength="1800" placeholder="Напиши так, як є…"></textarea>
+              <div class="composer-actions">
+                <button type="button" class="text-btn" id="skipBtn">Я поки не хочу відповідати</button>
+                <button type="submit" class="primary-btn">Надіслати</button>
+              </div>
+            </form>
+          </div>
+          <aside class="panel side-panel">
+            <p class="eyebrow">ТЕ, ЩО ВЖЕ ЖИВЕ</p>
+            <div id="livingPreview" class="stack"></div>
+            <button class="secondary-btn full" data-view="archive">Побачити Архів</button>
+          </aside>
+        </div>
+      </section>
+
+
+      <section class="view" id="view-return" hidden>
+        <div class="panel wide-panel return-panel">
+          <div class="panel-head">
+            <div><p class="eyebrow">ЖИВА ПАМ’ЯТЬ · v0.3</p><h2>Поки тебе не було</h2></div>
+            <span class="badge" id="returnCount">0 змін</span>
+          </div>
+          <p class="return-lead">Те, що ти залишив, могло жити без тебе. Тут видно лише ті зміни, які стосуються твоїх підтверджених Слідів.</p>
+          <div id="returnChanges" class="stack"></div>
+          <div id="emptyReturn" class="empty-state">Поки твої Сліди не змінилися без тебе. Це теж стан Живої Пам’яті.</div>
+        </div>
+      </section>
+
+      <section class="view" id="view-traces" hidden>
+        <div class="panel wide-panel">
+          <div class="panel-head">
+            <div><p class="eyebrow">МОЇ СПІЛЬНІ СЛІДИ З АГЕНТОМ</p><h2>Сліди</h2></div>
+            <button class="secondary-btn" id="exportBtn">Експортувати JSON</button>
+          </div>
+          <div id="myTraces" class="card-grid"></div>
+          <div id="emptyMyTraces" class="empty-state" hidden>Поки що немає жодного підтвердженого Сліду.</div>
+        </div>
+      </section>
+
+      <section class="view" id="view-archive" hidden>
+        <div class="panel wide-panel">
+          <div class="panel-head">
+            <div><p class="eyebrow">ТЕ, ЩО ПЕРЕЖИЛО ЗУСТРІЧ</p><h2>Архів</h2></div>
+            <span class="badge" id="archiveCount"></span>
+          </div>
+          <div class="archive-sections">
+            <section><h3>Питання, які ще живуть</h3><div id="questionArchive" class="stack"></div></section>
+            <section><h3>Сліди, що повертаються</h3><div id="sharedArchive" class="stack"></div></section>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="view-gravity" hidden>
+        <div class="panel wide-panel">
+          <div class="panel-head">
+            <div><p class="eyebrow">СЛІД ↔ СЛІД</p><h2>Тяжіння</h2></div>
+            <span class="badge">proposal ≠ truth</span>
+          </div>
+          <p class="lead narrow">Агент може помітити можливий зв’язок. Спільнота вирішує, чи дозволити формі стати Місцем.</p>
+          <div id="gravityArea"></div>
+        </div>
+      </section>
+
+      <section class="view" id="view-changes" hidden>
+        <div class="panel wide-panel">
+          <div class="panel-head">
+            <div><p class="eyebrow">ВИХОВУВАНА ТЕХНОСФЕРА</p><h2>Я змінююсь</h2></div>
+            <span class="badge">Agent v0.3</span>
+          </div>
+          <div id="changeLog" class="timeline"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="traceDialog" class="modal">
+    <form method="dialog" class="modal-card" id="traceForm">
+      <button class="close-btn" value="cancel" aria-label="Закрити">×</button>
+      <p class="eyebrow">МОЖЛИВИЙ СЛІД · PROPOSAL</p>
+      <h2>Що залишимо після цієї зустрічі?</h2>
+      <p id="traceReason" class="proposal-reason"></p>
+      <textarea id="traceDraft" rows="4" maxlength="600"></textarea>
+      <div id="traceRelations" class="trace-relations"></div>
+      <fieldset>
+        <legend>Де він може жити?</legend>
+        <label><input type="radio" name="visibility" value="private" checked /> Тільки тут</label>
+        <label><input type="radio" name="visibility" value="anonymous" /> Можна анонімно показати іншим</label>
+        <label><input type="radio" name="visibility" value="world" /> Інші можуть продовжувати у спільному Архіві</label>
+      </fieldset>
+      <div class="modal-actions">
+        <button value="release" class="text-btn" id="releaseTraceBtn">Відпустити</button>
+        <button value="save" class="primary-btn" id="saveTraceBtn">Залишити Слід</button>
+      </div>
+    </form>
+  </dialog>
+
+
+  <dialog id="continueTraceDialog" class="modal">
+    <form method="dialog" class="modal-card" id="continueTraceForm">
+      <button class="close-btn" value="cancel" aria-label="Закрити">×</button>
+      <p class="eyebrow">ПРОДОВЖИТИ СЛІД · v0.3</p>
+      <h2>Залишити наступну версію</h2>
+      <div id="continueTraceHistory" class="version-history"></div>
+      <label class="field-label" for="continueTraceDraft">Твоя версія</label>
+      <textarea id="continueTraceDraft" rows="4" maxlength="600"></textarea>
+      <p class="micro">Стара версія залишиться видимою. Твоя відповідь стане наступною версією цього самого Сліду.</p>
+      <div class="modal-actions">
+        <button value="cancel" class="text-btn">Не торкатися</button>
+        <button value="save" class="primary-btn" id="saveContinuedTraceBtn">Залишити нову версію</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="agentChangeDialog" class="modal">
+    <form method="dialog" class="modal-card">
+      <button class="close-btn" value="cancel" aria-label="Закрити">×</button>
+      <p class="eyebrow">КАНДИДАТ НА ЗМІНУ АГЕНТА</p>
+      <h2>Чи варто це перевіряти далі?</h2>
+      <p id="agentChangeReason" class="proposal-reason"></p>
+      <textarea id="agentChangeDraft" rows="3" maxlength="600"></textarea>
+      <div class="modal-actions">
+        <button value="release" class="text-btn" id="releaseAgentChangeBtn">Відпустити</button>
+        <button value="save" class="primary-btn" id="saveAgentChangeBtn">Залишити як кандидат</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="spaceDialog" class="modal">
+    <form method="dialog" class="modal-card" id="spaceForm">
+      <button class="close-btn" value="cancel" aria-label="Закрити">×</button>
+      <p class="eyebrow">КАНДИДАТ У ПРОСТІР</p>
+      <h2>Тут уже є Місце?</h2>
+      <p id="spaceEvidence" class="lead"></p>
+      <label class="field-label">Що ти тут бачиш?</label>
+      <textarea id="spaceInterpretation" rows="3" placeholder="Можна назвати, розділити, заперечити…"></textarea>
+      <div class="space-decisions">
+        <button value="confirm" class="primary-btn" id="confirmSpaceBtn">Так, тут щось є</button>
+        <button value="different" class="secondary-btn" id="differentSpaceBtn">Я бачу тут інше</button>
+        <button value="hold" class="secondary-btn" id="holdSpaceBtn">Залишити без форми</button>
+        <button value="reject" class="text-btn" id="rejectSpaceBtn">Це різні речі</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
